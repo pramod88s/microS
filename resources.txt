@@ -1,0 +1,114 @@
+https://api.themoviedb.org/3/movie/700?api_key=55fd3b2e904fd20e99f052117df1b859&language=en-US
+
+> application.yml (rename .properties file)
+logging:
+  level:
+    .: error
+    org.springframework: ERROR
+    com.ibm: ERROR
+
+spring:
+  profiles:
+    default : "dev"
+  main:
+    banner-mode: "off"
+
+server:
+  email: default@ibm.com
+
+---
+
+spring:
+  config: 
+    activate :
+      on-profile : "dev"
+server:
+  email: dev@ibm.com
+  cluster:
+    - ip: 127.0.0.1
+      path: /dev1
+    - ip: 127.0.0.2
+      path: /dev2
+    - ip: 127.0.0.3
+      path: /dev3
+
+---
+
+spring:
+  config: 
+    activate :
+      on-profile : "prod"
+server:
+  email: prod@ibm.com
+  cluster:
+    - ip: 192.168.0.1
+      path: /app1
+    - ip: 192.168.0.2
+      path: /app2
+    - ip: 192.168.0.3
+      path: /app3
+
+
+
+
+
+
+https://github.com/vishymails/environment-variable-repo.git
+
+
+install mongoDB
+https://github.com/rancher-sandbox/rancher-desktop/releases (first install wsl2: instructions included in this doc)
+
+
+
+
+
+<html>
+	<head>
+		<title>MongoDB/Spring Boot Microservices Demo IBM</title>
+		<style>
+			table, th, td {
+			   border: 1px solid black;
+			   border-spacing: 0px;
+			}
+			th, td {
+				padding: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<table>
+			<thead>
+				<tr>
+					<th>Make</th>
+					<th>Model</th>
+					<th>Description</th>
+					<th>Year</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="car : ${carList}">
+					<td th:text="${car.make}"></td>
+					<td th:text="${car.model}"></td>
+					<td th:text="${car.description}"></td>
+					<td th:text="${car.year}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<h2>Add Car</h2>
+		<form action="/addCar" method="POST">
+			Make <input type="text" id="make" name="make" /><br />
+			Model <input type="text" id="model" name="model" /><br />
+			Year <input type="text" id="year" name="year" /><br />
+			Description <textarea rows="5" cols="70" id="description" name="description" >
+			</textarea><br />
+			<input type="submit" />
+		</form>
+		<h2>Search for cars</h2>
+		<form action="/search" method="POST">
+			<input type="text" name="search" id="search" th:value="${search}" />
+			<input type="submit" value="Search" />
+		</form>
+	</body>
+</html>

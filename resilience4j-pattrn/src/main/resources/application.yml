@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: resilience4j-pattrn
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
